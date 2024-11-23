@@ -35,12 +35,14 @@ spec:
                 static_configs:
                   - targets: ['alertmanager-operated.argocd.svc.cluster.local:9093']
               - job_name: prometheus
+                scrape_interval: 30s
+                scrape_timeout: 10s
                 static_configs:
-                  - targets: ['prometheus-operated.argocd.svc.cluster.local:9090']
+                  - targets: ['localhost:9090']
         alertmanager:
           enabled: true
         nodeExporter:
-          enabled: false
+          enabled: true
     chart: kube-prometheus-stack
   syncPolicy:
     automated:
