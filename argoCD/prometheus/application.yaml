@@ -35,7 +35,7 @@ spec:
                 static_configs:
                   - targets: ['alertmanager-operated.argocd.svc.cluster.local:9093']
               - job_name: prometheus
-                - static_configs:
+                static_configs:
                   - targets: ['prometheus-operated.argocd.svc.cluster.local:9090']
         alertmanager:
           enabled: true
