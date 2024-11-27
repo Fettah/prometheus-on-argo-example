@@ -18,9 +18,7 @@ spec:
     helm:
       skipCrds: true
       values: |-
-        prometheus:
-          prometheusSpec:
-            additionalPrometheusRules:
+        additionalPrometheusRules:
             - name: "HighCPUUsage"
               groups:
                 - name: "cpu-alerts"
@@ -33,6 +31,8 @@ spec:
                       annotations:
                         summary: "CPU usage is above 40% for 30 seconds"
                         description: "CPU usage for instance {{ $labels.instance }} has exceeded 40% for more than 30 seconds."
+        prometheus:
+          prometheusSpec:
             serviceMonitorSelector:
               matchLabels:
                 prometheus: argo-cd-grafana
