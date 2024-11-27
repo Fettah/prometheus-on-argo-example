@@ -18,6 +18,30 @@ spec:
     helm:
       skipCrds: true
       values: |-
+        alertmanager:
+          enabled: true
+          config:
+            global:
+              resolve_timeout: 5m
+            route:
+              group_by:
+                - severity
+                - instance
+              group_wait: 30s
+              group_interval: 5m
+              repeat_interval: 1m
+              receiver: slack-notifications
+              routes:
+              - receiver: slack-notifications
+                match:
+                  severity: critical
+            receivers:
+            - name: slack-notifications
+              slack_configs:
+              - channel: '#alert-manager-test'
+                send_resolved: true
+                api_url: 'http://slack-webhook-secret/api_url'
+                text: "{{ range .Alerts }}<!channel> {{ .Annotations.summary }}\n{{ .Annotations.description }}\n{{ end }}"
         additionalPrometheusRules:
         - name: "kube-prometheus-stack-highcpuusage"
           groups:
