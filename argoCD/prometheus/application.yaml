@@ -18,6 +18,11 @@ spec:
     helm:
       skipCrds: true
       values: |-
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+        scrapeConfigSelectorNilUsesHelmValues: false
         prometheus:
           prometheusSpec:
             serviceMonitorSelector:
