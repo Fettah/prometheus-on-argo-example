@@ -4,7 +4,7 @@ metadata:
   name: prometheus-node-exporter
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-wave: '3'
   labels:
     release: kube-prometheus-stack
 spec:
@@ -19,6 +19,10 @@ spec:
       values: |-
         hostRootFsMount:
           enabled: false
+        service:
+          enabled: true
+          port: 9200
+          targetPort: 9200
     chart: prometheus-node-exporter
   syncPolicy:
     automated:
