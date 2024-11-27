@@ -20,6 +20,19 @@ spec:
       values: |-
         prometheus:
           prometheusSpec:
+            additionalPrometheusRules:
+            - name: "HighCPUUsage"
+              groups:
+                - name: "cpu-alerts"
+                  rules:
+                    - alert: HighCPUUsage
+                      expr: 100 - avg(irate(node_cpu_seconds_total{mode="idle"}[5m])) by (instance) > 40
+                      for: 30s
+                      labels:
+                        severity: critical
+                      annotations:
+                        summary: "CPU usage is above 40% for 30 seconds"
+                        description: "CPU usage for instance {{ $labels.instance }} has exceeded 40% for more than 30 seconds."
             serviceMonitorSelector:
               matchLabels:
                 prometheus: argo-cd-grafana
@@ -43,19 +56,6 @@ spec:
           enabled: true
         nodeExporter:
           enabled: true
-        additionalPrometheusRules:
-          - name: "HighCPUUsage"
-            groups:
-              - name: "cpu-alerts"
-                rules:
-                  - alert: HighCPUUsage
-                    expr: 100 - avg(irate(node_cpu_seconds_total{mode="idle"}[5m])) by (instance) > 40
-                    for: 30s
-                    labels:
-                      severity: critical
-                    annotations:
-                      summary: "CPU usage is above 40% for 30 seconds"
-                      description: "CPU usage for instance {{ $labels.instance }} has exceeded 40% for more than 30 seconds."
     chart: kube-prometheus-stack
   syncPolicy:
     automated:
