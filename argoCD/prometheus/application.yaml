@@ -62,7 +62,7 @@ spec:
               datasources:
               - name: Loki
                 type: loki
-                url: http://loki-gateway.loki.svc.cluster.local
+                url: http://loki.argocd.svc.cluster.local:3100
                 access: proxy
                 isDefault: false
     chart: kube-prometheus-stack
