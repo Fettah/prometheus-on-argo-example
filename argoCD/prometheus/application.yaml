@@ -55,6 +55,16 @@ spec:
                   annotations:
                     summary: "CPU usage is above 40% for 30 seconds"
                     description: "CPU usage for instance {{ $labels.instance }} has exceeded 40% for more than 30 seconds."
+        grafana:
+          datasources:
+            datasources.yaml:
+              apiVersion: 1
+              datasources:
+              - name: Loki
+                type: loki
+                url: http://loki-gateway.loki.svc.cluster.local
+                access: proxy
+                isDefault: false
     chart: kube-prometheus-stack
   syncPolicy:
     automated:
